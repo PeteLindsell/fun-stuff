@@ -1,65 +1,92 @@
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Virtual drums</title>
-  <style>
-    img {
-      width: 100%;
-      height: auto;
-    }
-    #container {
-      position: relative;
-    }
-    #tom {
-      background: rgba(255, 165, 0, .5);
-      border-radius: 34%;
-      height: 27%;
-      left: 46%;
-      top: 22%;
-      width: 23%;
-    }
-    #hihat {
-      background: rgba(140, 0, 255, 0.5);
-      border-radius: 50%;
-      height: 15%;
-      left: 5%;
-      top: 18%;
-      width: 37%;
-      transform: rotate(15deg);
-    }
-    .object {
-      position: absolute;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Virtual drums</title>
+    <style>
+      img {
+        width: 100%;
+        height: auto;
+      }
+      #container {
+        position: relative;
+      }
+      #tom {
+        background: rgba(255, 165, 0, .3);
+        border-radius: 34%;
+        height: 27%;
+        left: 46%;
+        top: 22%;
+        width: 23%;
+      }
+      #hihat {
+        background: rgba(9, 255, 0, 0.3);
+        border-radius: 50%;
+        height: 8%;
+        left: 75%;
+        top: 17%;
+        width: 25%;
+      }
+      #openhat {
+        background: rgba(140, 0, 255, 0.3);
+        border-radius: 50%;
+        height: 15%;
+        left: 5%;
+        top: 18%;
+        width: 37%;
+        transform: rotate(15deg);
+      }
+      #kick {
+        background: rgba(255, 0, 0, 0.3);
+        border-radius: 50%;
+        height: 41%;
+        left: 24%;
+        top: 50%;
+        width: 34%;
+      }
+      .instrument {
+        position: absolute;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Virtual Drums</h1>
+    <div id="container">
+      <img src="./images/drum-kit.png" />
+      <div id="tom" class="instrument"></div>
+      <div id="hihat" class="instrument"></div>
+      <div id="openhat" class="instrument"></div>
+      <div id="kick" class="instrument"></div>
+    </div>
   
-</body>
-  <h1>Virtual Drums</h1>
-  <div id="container">
-    <img src="./images/drum-kit.png" />
-    <div id="tom" class="object"></div>
-    <div id="hihat" class="object"></div> 
-  </div>
+    <audio data-sound="boom" src="sounds/boom.wav"></audio>
+    <audio data-sound="hihat" src="./sounds/hihat.wav"></audio>
+    <audio data-sound="kick" src="sounds/kick.wav"></audio>
+    <audio data-sound="openhat" src="sounds/openhat.wav"></audio>
+    <audio data-sound="ride" src="sounds/ride.wav"></audio>
+    <audio data-sound="snare" src="sounds/snare.wav"></audio>
+    <audio data-sound="tom" src="sounds/tom.wav"></audio>
+  
+    <script>
+      const instruments = document.querySelectorAll('.instrument');
+      instruments.forEach(instrument => {
+        instrument.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          playSound(this.id);
+        });
+        instrument.addEventListener('mousedown', function(e) {
+          e.preventDefault();
+          playSound(this.id);
+        });
+      });
 
-  <audio data-sound="tom" src="./sounds/tom.wav"></audio>
-  <audio data-sound="hihat" src="./sounds/hihat.wav"></audio>
-
-  <script>
-    document.getElementById('tom').addEventListener('mousedown', function(e) {
-      e.preventDefault();
-      const sound = document.querySelector('[data-sound="tom"]');
-      sound.currentTime = 0;
-      sound.play();
-    })
-    document.getElementById('hihat').addEventListener('mousedown', function(e) {
-      e.preventDefault();
-      const sound = document.querySelector('[data-sound="hihat"]');
-      sound.currentTime = 0;
-      sound.play();
-    })
-  </script>
+      function playSound(name) {
+        const sound = document.querySelector(`[data-sound="${name}"]`);
+        sound.currentTime = 0;
+        sound.play();
+      }
+    </script>
+  </body>
 </html>
